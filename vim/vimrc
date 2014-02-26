@@ -1,0 +1,107 @@
+" General {
+    set enc=utf-8
+    set whichwrap=b,s,<,>,[,]
+    set fileformats=unix
+    set hlsearch
+    set laststatus=2
+    set backspace=indent,eol,start
+" }
+
+" Coding {
+    syntax on
+    colo molokai
+    set tabstop=4
+    set cindent shiftwidth=4
+    set autoindent shiftwidth=4
+    set comments=://
+    set tags=tags
+" }
+
+" pathogen {
+    execute pathogen#infect()
+" }
+
+" Auto commands {
+    " Enable load plugin files
+    filetype plugin on
+    filetype plugin indent on
+
+    if has("autocmd")
+        autocmd FileType xml,html,c,java,perl,shell,sh,bash,cpp,python,php,ruby,vim,json set number
+        autocmd FileType c,java,perl,shell,sh,bash,cpp,python,php,ruby,vim set expandtab
+        autocmd FileType c,perl,python set colorcolumn=80
+        autocmd FileType cpp set tabstop=2 shiftwidth=2 softtabstop=2
+        autocmd FileType python set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab 
+        autocmd FileType html set tabstop=2 cindent shiftwidth=2 autoindent shiftwidth=2
+        autocmd FileType json set autoindent formatoptions=tcq2l shiftwidth=2  softtabstop=2 foldmethod=syntax
+
+    endif
+
+    if has("autocmd")
+        autocmd FileType javascr.pt set omnifunc=javascr.ptcomplete#CompleteJS
+        autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+        autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+        autocmd FileType java set omnifunc=javacomplete#Complete
+        autocmd FileType c set omnifunc=ccomplete#Complete
+        autocmd FileType cpp set omnifunc=cppcomplete#CompleteCPP
+    endif
+
+    if has("autocmd")
+        " When editing a file, always jump to the last cursor position
+        autocmd BufReadPost *
+        \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+        \   exe "normal! g'\"" |
+        \ endif
+    endif
+" }
+
+" Taglist {
+    " Disable changing the window width
+    let Tlist_Inc_Winwidth=0
+    " Taglist will quit when current file was closed
+    let Tlist_Exit_OnlyWindow=1
+    " Executable ctags binary path
+    let Tlist_Ctags_Cmd='/usr/bin/ctags'
+" }
+
+" winManager {
+    " winManagerWindow Configure
+    let g:winManagerWindowLayout='TagList,FileExplorer|BufExplorer'
+    let g:winManagerWidth=40
+    " winmanager will quit when current file was closed
+    let g:persistentBehaviour=0
+    " Use wm to open winmanager in normal mode
+    nmap WM :WMToggle<cr>
+
+    " When opening C/C++ file, open explorer automatically
+    " let g:autoOpenExplorer = 1
+" }
+
+" python {
+    " flake8
+    nmap <buffer> f8 :call Flake8()<CR>
+" }
+
+" canque {
+"    function MyConqueStartup(term)
+"        resize 15
+"    endfunc
+"    call conque_term#register_function('after_startup', 'MyConqueStartup')
+"    nmap cnsh :ConqueTermSplit bash<cr>
+"    nmap cnpy :ConqueTermSplit python<cr>
+" }
+
+" powerline {
+    python from powerline.vim import setup as powerline_setup
+    python powerline_setup()
+    python del powerline_setup
+" }
+"
+set encoding=utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
