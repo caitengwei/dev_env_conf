@@ -10,7 +10,7 @@
 "       Company:  FH Südwestfalen, Iserlohn
 "       Version:  1.0
 "       Created:  16.12.2008 18:16:55
-"      Revision:  $Id: perlsupportregex.vim,v 1.4 2012/02/26 14:07:44 mehner Exp $
+"      Revision:  $Id: perlsupportregex.vim,v 1.26 2011/10/07 18:22:20 mehner Exp $
 "       License:  Copyright 2008-2010 Dr. Fritz Mehner
 "===============================================================================
 "
@@ -87,7 +87,6 @@ INITIALIZE_PERL_INTERFACE
   "
   " remove content if any
   "
-	setlocal modifiable
   silent normal ggdG
 
   perl <<EOF_RegexExplain
@@ -98,11 +97,8 @@ INITIALIZE_PERL_INTERFACE
       ( $success, $regexp ) = VIM::Eval('s:Perl_PerlRegexVisualize_regexp');
       if ( $success == 1 ) {
         # get the explanation
-				$explanation  = "The regular expression\n\n".${regexp}."\n\nmatches as follows:\n\n";
-				#$regexp = eval 'qr{'.$regexp.'}'.$flag;
-        $regexp = qr{$regexp};
-
-        $explanation  .= YAPE::Regex::Explain->new($regexp)->explain('regex');
+        $regexp = eval 'qr{'.$regexp.'}'.$flag;
+        $explanation  = YAPE::Regex::Explain->new($regexp)->explain();
         }
       else {
         $explanation  = "\n*** VIM failed to evaluate the regular expression ***\n";
@@ -113,10 +109,7 @@ INITIALIZE_PERL_INTERFACE
 
       # put the explanation to the top of the buffer
       $curbuf->Append( 0, @explanation );
-
-			VIM::DoCommand( 'setlocal nomodifiable' );
 EOF_RegexExplain
-
 
 endfunction    " ----------  end of function Perl_RegexExplain  ----------
 "
@@ -243,7 +236,6 @@ function! perlsupportregex#Perl_RegexVisualize( )
   endif
   "
   " remove content if any:
-	setlocal modifiable
   silent normal ggdG
 	let s:Perl_PerlRegexMatch                 = ''
 
@@ -518,8 +510,6 @@ function! perlsupportregex#Perl_RegexVisualize( )
       }
       return ($result, $linecount);
     } # ----------  end of subroutine lineruler  ----------
-
-		VIM::DoCommand( 'setlocal nomodifiable' );
 EOF_regex_evaluate
   "
   if line('$') == 1
@@ -598,7 +588,6 @@ function! perlsupportregex#Perl_RegexMatchSeveral( )
   endif
   "
   " remove content if any:
-	setlocal modifiable
   silent normal ggdG
 
   perl <<EOF_evaluate_multiple
@@ -673,8 +662,6 @@ function! perlsupportregex#Perl_RegexMatchSeveral( )
       }
     return "'$result'";
     } # ----------  end of subroutine splitstr  ----------
-
-		VIM::DoCommand( 'setlocal nomodifiable' );
 EOF_evaluate_multiple
   "
   if line('$') == 1

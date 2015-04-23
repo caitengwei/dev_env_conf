@@ -39,13 +39,6 @@ if !exists("g:defaultExplorer")
 	let g:defaultExplorer = 1
 end
 
-" open explorer automatically if g:autoOpenExplorer
-if exists("g:autoOpenExplorer")
-    if g:autoOpenExplorer 
-        autocmd VimEnter * :silent call <SID>ToggleWindowsManager()
-    endif
-endif
-
 " commands
 " toggling between the windows manager open or closed. this can also be used
 " to start win manager.

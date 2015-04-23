@@ -1,11 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/root/.config/powerline/themes/tmux'
-let g:netrw_dirhist_2='/root/.config/powerline'
-let g:netrw_dirhist_3='/root/.tmux'
-let g:netrw_dirhist_4='/schooner/backup/tcai/mapkeeper_fdf/mapkeeper/fdf'
-let g:netrw_dirhist_5='/schooner/backup/tcai/rocksdb/db'
-let g:netrw_dirhist_6='/schooner/backup/qyu/nosql-test/output/2014-02-09-19:27:30-FDFJNI-load'
-let g:netrw_dirhist_7='/schooner/backup/qyu/nosql-test/output/2014-02-09-19:27:30-FDFJNI-load/servers'
-let g:netrw_dirhist_8='/schooner/backup/qyu/2.0.3/conf'
-let g:netrw_dirhist_9='/schooner/backup/qyu/YCSB_CFS_Clients'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/Users/twcai/.subversion/auth'
+let g:netrw_dirhist_2='/Users/twcai/.m2/repository'

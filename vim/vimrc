@@ -4,28 +4,31 @@
     set fileformats=unix
     set hlsearch
     set laststatus=2
-    set backspace=indent,eol,start
 " }
 
 " Coding {
     syntax on
     colo molokai
+    set expandtab
     set tabstop=4
-    set cindent shiftwidth=4
-    set autoindent shiftwidth=4
+    set shiftwidth=4
+    set softtabstop=4
+    " set cindent shiftwidth=4
+    " set autoindent shiftwidth=4
+    set ruler
     set comments=://
     set tags=tags
 " }
 
-" pathogen {
+" vim-pathogen {
     execute pathogen#infect()
+    call pathogen#helptags()
 " }
 
 " Auto commands {
     " Enable load plugin files
     filetype plugin on
     filetype plugin indent on
-
     if has("autocmd")
         autocmd FileType xml,html,c,java,perl,shell,sh,bash,cpp,python,php,ruby,vim,json set number
         autocmd FileType c,java,perl,shell,sh,bash,cpp,python,php,ruby,vim set expandtab
@@ -33,12 +36,12 @@
         autocmd FileType cpp set tabstop=2 shiftwidth=2 softtabstop=2
         autocmd FileType python set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab 
         autocmd FileType html set tabstop=2 cindent shiftwidth=2 autoindent shiftwidth=2
-        autocmd FileType json set autoindent formatoptions=tcq2l shiftwidth=2  softtabstop=2 foldmethod=syntax
-
+        autocmd FileType json,javascript set autoindent formatoptions=tcq2l shiftwidth=2  softtabstop=2 foldmethod=syntax
     endif
 
     if has("autocmd")
-        autocmd FileType javascr.pt set omnifunc=javascr.ptcomplete#CompleteJS
+        autocmd FileType python set omnifunc=pythoncomplete#Complete
+        autocmd FileType javascrīpt set omnifunc=javascrīptcomplete#CompleteJS
         autocmd FileType html,markdown set omnifunc=htmlcomplete#CompleteTags
         autocmd FileType css set omnifunc=csscomplete#CompleteCSS
         autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
@@ -49,11 +52,11 @@
     endif
 
     if has("autocmd")
-        " When editing a file, always jump to the last cursor position
-        autocmd BufReadPost *
-        \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-        \   exe "normal! g'\"" |
-        \ endif
+      " When editing a file, always jump to the last cursor position
+      autocmd BufReadPost *
+      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+      \   exe "normal! g'\"" |
+      \ endif
     endif
 " }
 
@@ -63,20 +66,151 @@
     " Taglist will quit when current file was closed
     let Tlist_Exit_OnlyWindow=1
     " Executable ctags binary path
-    let Tlist_Ctags_Cmd='/usr/bin/ctags'
+    let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 " }
 
 " winManager {
     " winManagerWindow Configure
     let g:winManagerWindowLayout='TagList,FileExplorer|BufExplorer'
-    let g:winManagerWidth=40
+    let g:winManagerWidth=33
     " winmanager will quit when current file was closed
     let g:persistentBehaviour=0
     " Use wm to open winmanager in normal mode
     nmap WM :WMToggle<cr>
+" }
 
-    " When opening C/C++ file, open explorer automatically
-    " let g:autoOpenExplorer = 1
+" NERDTree {
+    nmap NT :NERDTreeToggle<cr>
+" }
+
+" cscope {
+    if has('cscope')
+      set cscopetag cscopeverbose
+
+      if has('quickfix')
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
+      endif
+
+      cnoreabbrev csa cs add
+      cnoreabbrev csf cs find
+      cnoreabbrev csk cs kill
+      cnoreabbrev csr cs reset
+      cnoreabbrev css cs show
+      cnoreabbrev csh cs help
+
+      command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+    endif
+    if has("cscope")
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
+		set csprg=/usr/local/bin/cscope
+		set csto=0
+		set cst
+		set nocsverb
+		" add any database in current directory
+		if filereadable("cscope.out")
+		    cs add cscope.out
+		" else add database pointed to by environment
+		elseif $CSCOPE_DB != ""
+		    cs add $CSCOPE_DB
+		endif
+		set csverb
+
+        " 's'   symbol: find all references to the token under cursor
+        " 'g'   global: find global definition(s) of the token under cursor
+        " 'c'   calls:  find all calls to the function name under cursor
+        " 't'   text:   find all instances of the text under cursor
+        " 'e'   egrep:  egrep search for the word under cursor
+        " 'f'   file:   open the filename under cursor
+        " 'i'   includes: find files that include the filename under cursor
+        " 'd'   called: find functions that function under cursor calls
+        nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+        nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+        " Using 'CTRL-spacebar' then a search type makes the vim window
+        " split horizontally, with search result displayed in
+        " the new window.
+
+        nmap <C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+        nmap <C-Space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+        nmap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+        " Hitting CTRL-space *twice* before the search type does a vertical
+        " split instead of a horizontal one
+
+        nmap <C-Space><C-Space>s
+            \:vert scs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>g
+            \:vert scs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>c
+            \:vert scs find c <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>t
+            \:vert scs find t <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>e
+            \:vert scs find e <C-R>=expand("<cword>")<CR><CR>
+        nmap <C-Space><C-Space>i
+            \:vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+        nmap <C-Space><C-Space>d
+            \:vert scs find d <C-R>=expand("<cword>")<CR><CR>
+	endif
+
+
+" Share clipboard on Mac {
+    vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>
+    nmap <C-v> :call setreg("\"",system("pbpaste"))<CR>p
+" }
+
+" c-support {
+    " Bind template styles to filename extensions
+    let g:C_Styles={ '*.c,*.h' : 'default', '*.cc,*.cpp,*.hh' : 'CPP' }
+" }
+
+" build function {
+    map <f6> :call CCompileRunGpp()</cr><cr>
+        func! CCompileRunGpp()
+            exec "w"
+            exec "!gcc % -o %< -ansi -g -Wall -O2 -std=c99"
+            exec "!./%<"
+        endfunc
+" }
+
+" build function {
+    map <f7> :call CPPCompileRunGpp()</cr><cr>
+        func! CPPCompileRunGpp()
+            exec "w"
+            exec "!g++ % -o %< -ansi -g -Wall"
+            exec "!rm ./%<.o"
+            exec "!rm -rf  ./%<.dSYM"
+            exec "!./%<"
+        endfunc
+" }
+
+" Neocomplcache {
+"   let g:neocomplcache_enable_at_startup=1
+"   " Enable heavy moni completion
+"   if !exists('g:neocomplcache_omni_patterns')
+"     let g:neocomplcache_omni_patterns = {}
+"   endif
+"   let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+"   "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+"   let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"   let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+"   let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+" }
+
+" Perl::Tags {
+" Enable Perl::Tags
+    let g:Perl_PerlTags = 'on'
 " }
 
 " python {
@@ -88,20 +222,75 @@
 "    function MyConqueStartup(term)
 "        resize 15
 "    endfunc
-"    call conque_term#register_function('after_startup', 'MyConqueStartup')
+"    call
+"    conque_term#register_function('after_startup', 'MyConqueStartup')
 "    nmap cnsh :ConqueTermSplit bash<cr>
 "    nmap cnpy :ConqueTermSplit python<cr>
 " }
 
-" powerline {
-    python from powerline.vim import setup as powerline_setup
-    python powerline_setup()
-    python del powerline_setup
+" vim-powerline {
+    let g:Powerline_symbols = 'unicode'
 " }
+
+" syntasitc {
+    " let g:syntastic_python_checkers = ['flake8']
+    " tunn off syntastic when editing Python
+    let g:syntasticignorefiles=[".*.py$"]
+" }
+
+"" Python-mode {
+"    " Turn on the whole plugin
+"    let g:pymode = 1
+"    " Trim unused whitespaces on save
+"    let g:pymode_trim_whitespaces = 1
 "
-set encoding=utf-8
-set fileencoding=utf-8
-set termencoding=utf-8
-set fileencodings=utf-8
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
+"    " Activate rope
+"    " Keys:
+"    " K             Show python docs
+"    " <Ctrl-Space>  Rope autocomplete
+"    " <Ctrl-c>g     Rope goto definition
+"    " <Ctrl-c>d     Rope show documentation
+"    " <Ctrl-c>f     Rope find occurrences
+"    " <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+"    " [[            Jump on previous class or function (normal, visual, operator modes)
+"    " ]]            Jump on next class or function (normal, visual, operator modes)
+"    " [M            Jump on previous class or method (normal, visual, operator modes)
+"    " ]M            Jump on next class or method (normal, visual, operator modes)
+"    let g:pymode_rope = 1
+"
+"    " Documentation
+"    let g:pymode_doc = 1
+"    let g:pymode_doc_key = 'K'
+"
+"    "Linting
+"    let g:pymode_lint = 1
+"    let g:pymode_lint_checker = "pyflakes,pep8"
+"    " Auto check when editting
+"    let g:pymode_lint_on_fly = 1
+"    " Extended autocompletion
+"    let g:pymode_rope_autoimport = 1
+"
+"    " Support virtualenv
+"    let g:pymode_virtualenv = 1
+"
+"    " Enable breakpoints plugin
+"    " Use <leader>b to add a pdb shortcut
+"    " (inserts import pdb; pdb.set_trace() ### XXX BREAKPOINT into your code
+"    let g:pymode_breakpoint = 1
+"    let g:pymode_breakpoint_key = '<leader>b'
+"
+"    " syntax highlighting
+"    " Enhanced syntax highlighting and formatting
+"    let g:pymode_syntax = 1
+"    let g:pymode_syntax_all = 1
+"    let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+"    let g:pymode_syntax_space_errors = g:pymode_syntax_all
+"
+"    " Don't autofold code
+"    let g:pymode_folding = 0
+"" }
+
+" eclim {
+    " disable by default
+    autocmd VimEnter * EclimDisable
+" }

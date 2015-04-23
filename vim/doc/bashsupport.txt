@@ -1,7 +1,7 @@
-*bashsupport.txt*                Bash Support                January 02 2013
+*bashsupport.txt*                Bash Support                    May 31 2012
 
 bash Support                                      *bash-support* *bashsupport*
-                             Plugin version 3.12
+                             Plugin version 3.10
                         for Vim version 7.0 and above
                        Fritz Mehner  <mehner@fh-swf.de>
 
@@ -645,8 +645,7 @@ The methods are "vim", "buffer" and "xterm".
 Item 'help (Bash builtins)'
 ---------------------------
 Look up Bash help for the word under the cursor. If there is no word under the
-cursor you will be asked for the name of a builtin. The tab expansion can be
-used.
+cursor you will be asked for the name of a builtin. The tab expansion is active.
 
 Item 'manual (utilities)'
 -------------------------
@@ -746,7 +745,6 @@ Legend:  (i) insert mode, (n) normal mode, (v) visual mode
   -- Snippets --------------------------------------------
 
      \nr     read code snippet                (n, i)
-     \nv     view code snippet  (readonly)    (n, i)
      \nw     write code snippet               (n, v, i)
      \ne     edit code snippet                (n, i)
 
@@ -783,7 +781,7 @@ Legend:  (i) insert mode, (n) normal mode, (v) visual mode
 
   -- Run -------------------------------------------------
 
-  [n]\rr     update file, run script          (n, i)
+     \rr     update file, run script          (n, i)
      \ra     set script cmd. line arguments   (n, i)
      \rba    set Bash cmd. line arguments     (n, i)
      \rc     update file, check syntax        (n, i)
@@ -908,7 +906,6 @@ g:BASH_Debugger                'term'
 g:BASH_LineEndCommColDefault   49
 g:BASH_SyntaxCheckOptionsGlob  ''
 g:BASH_Printheader             '%<%f%h%m%<  %=%{strftime('%x %X')}     Page %N'
-g:BASH_InsertFileHeader        'yes'
 g:BASH_BASH                    $SHELL         (Linux/U**X)
                                'bash.exe'     (Windows)
 g:BASH_Man                     'man'          (Linux/U**X)
@@ -946,7 +943,6 @@ g:BASH_AlsoBash                ''
            g:BASH_LineEndCommColDefault  : default starting column for line end comments
            g:BASH_SyntaxCheckOptionsGlob : shopt options used with syntax checking
            g:BASH_Printheader            : hardcopy header format
-           g:BASH_InsertFileHeader       : suppress file description comment for new files
            g:BASH_BASH                   : the shell used
            g:BASH_Man                    : the interface to the on-line manuals
            g:BASH_MapLeader              : the map leader for hotkeys (see|bashsupport-usage-vim|)

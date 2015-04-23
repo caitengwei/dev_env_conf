@@ -3,11 +3,11 @@
 § ========== USER MACROS ======================================
 § =============================================================
 §
-|AUTHOR|       = YOUR NAME 
-|AUTHORREF|    = 
-|EMAIL|        = 
-|ORGANIZATION| = 
-|COPYRIGHT|    = Copyright (c) |YEAR|, |AUTHOR|
+|AUTHOR|    = Tengwei Cai
+|AUTHORREF| = twcai
+|EMAIL|     = tengweicai@gmail.com
+|COMPANY|   = InSigma Hengtian Software Ltd.
+|COPYRIGHT| = Copyright (c) |YEAR|, |AUTHOR|
 §
 § =============================================================
 § ========== FILE INCLUDES ====================================
