@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<root>
+  <item><name>Private Settings</name>
+    <item>
+      <name>Change "left command + escape" to "move focus to next window in application".</name>
+      <appendix>(You need to enable command-backquote (⌘`) shortcut from System Preferences.)</appendix>
+      <identifier>remap.command_escape_to_command_backquote</identifier>
+      <autogen>
+        __KeyToKey__
+        KeyCode::ESCAPE, ModifierFlag::COMMAND_L,
+        KeyCode::BACKQUOTE, ModifierFlag::COMMAND_L
+      </autogen>
+    </item>
+  </item>
+</root>
