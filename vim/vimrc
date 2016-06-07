@@ -215,7 +215,7 @@
 
 " python {
     " flake8
-    nmap <buffer> f8 :call Flake8()<CR>
+    " nmap <buffer> f8 :call Flake8()<CR>
 " }
 
 " canque {
@@ -235,7 +235,7 @@
 " syntasitc {
     " let g:syntastic_python_checkers = ['flake8']
     " tunn off syntastic when editing Python
-    let g:syntasticignorefiles=[".*.py$"]
+    " let g:syntasticignorefiles=[".*.py$"]
 " }
 
 "" Python-mode {
@@ -292,5 +292,5 @@
 
 " eclim {
     " disable by default
-    autocmd VimEnter * EclimDisable
+    " autocmd VimEnter * EclimDisable
 " }
